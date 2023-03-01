@@ -6,11 +6,11 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/03/01 23:23:05 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/03/01 23:25:21 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main()
+int main(int argc, char **argv)
 {
 	return (0);
 }
