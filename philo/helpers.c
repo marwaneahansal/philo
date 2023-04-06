@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:01:23 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/03 23:01:26 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/06 21:46:43 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,21 @@ int  check_args(int argc, char **argv)
   i = 1;
   while (i < argc)
   {
-    if (!is_numeric(argv[i]) || ft_atoi(argv[i]) <= 0)
-    {
-      printf("Error: Invalid Arguments\n");
-      return (0);
-    }
-    i++;
+	if (!is_numeric(argv[i]) || ft_atoi(argv[i]) <= 0)
+	{
+	  printf("Error: Invalid Arguments\n");
+	  return (0);
+	}
+	i++;
   }
   return (1);
 }
 
 t_data  *init_philos_data(int argc, char **argv)
 {
-  t_data  *data;
+  	t_data  *data;
 
-  data = malloc(sizeof(t_data));
+  	data = malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
 	data->philos_nb = 0;
@@ -54,12 +54,12 @@ t_data  *init_philos_data(int argc, char **argv)
 	data->time_to_eat = 0;
 	data->time_to_sleep = 0;
 	data->nb_times_of_eating = -1;
-  data->philos = NULL;
+  	data->philos = NULL;
 	data->forks = NULL;
 	data->start_time = 0;
-  if (!check_args(argc, argv))
-    return (free(data), NULL);
-  if (argc == 5 || argc == 6)
+  	if (!check_args(argc, argv))
+		return (free(data), NULL);
+  	if (argc == 5 || argc == 6)
 	{
 		data->philos_nb = ft_atoi(argv[1]);
 		data->time_to_die = ft_atoi(argv[2]);
@@ -67,11 +67,11 @@ t_data  *init_philos_data(int argc, char **argv)
 		data->time_to_sleep = ft_atoi(argv[4]);
 		if (argc == 6)
 			data->nb_times_of_eating = ft_atoi(argv[5]);
-    data->philos = malloc(sizeof(t_philo *) * data->philos_nb);
+		data->philos = malloc(sizeof(t_philo *) * data->philos_nb);
 		data->forks = malloc(sizeof(pthread_mutex_t) * data->philos_nb);
 		data->start_time = get_ms_time();
-    if (!data->philos)
-      return (NULL);
+		if (!data->philos)
+		return (NULL);
 	}
-  return (data);
+  	return (data);
 }
