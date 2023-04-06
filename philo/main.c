@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/03/31 01:18:26 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/05 01:07:41 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ int main(int argc, char **argv)
 	data = init_philos_data(argc, argv);
 	if (!data)
 		return (1);
-	printf("philos_nb ==> %d\n", data->philos_nb);
-	printf("time_to_die ==> %d\n", data->time_to_die);
-	printf("time_to_eat ==> %d\n", data->time_to_eat);
-	printf("time_to_sleep ==> %d\n", data->time_to_sleep);
-	printf("nb_times_of_eating ==> %d\n", data->nb_times_of_eating);
+	if (create_philos_threads(data))
+		return (1);
+	free(data->philos);
+	free(data->forks);
 	free(data);
 	return (0);
 }

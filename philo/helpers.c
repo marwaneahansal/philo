@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 01:01:23 by mahansal          #+#    #+#             */
-/*   Updated: 2023/03/31 01:19:02 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/03 23:01:26 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ t_data  *init_philos_data(int argc, char **argv)
 	data->time_to_eat = 0;
 	data->time_to_sleep = 0;
 	data->nb_times_of_eating = -1;
+  data->philos = NULL;
+	data->forks = NULL;
+	data->start_time = 0;
   if (!check_args(argc, argv))
     return (free(data), NULL);
   if (argc == 5 || argc == 6)
@@ -64,6 +67,11 @@ t_data  *init_philos_data(int argc, char **argv)
 		data->time_to_sleep = ft_atoi(argv[4]);
 		if (argc == 6)
 			data->nb_times_of_eating = ft_atoi(argv[5]);
+    data->philos = malloc(sizeof(t_philo *) * data->philos_nb);
+		data->forks = malloc(sizeof(pthread_mutex_t) * data->philos_nb);
+		data->start_time = get_ms_time();
+    if (!data->philos)
+      return (NULL);
 	}
   return (data);
 }
