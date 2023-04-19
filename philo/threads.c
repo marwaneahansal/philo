@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 02:11:46 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/15 03:06:33 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/19 01:41:42 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,22 @@ int	check_dying_philos(t_data *data)
 	i = 0;
 	while (i < data->philos_nb)
 	{
-		if (get_ms_time() - data->philos[i].last_eat_time > data->time_to_die)
+		if (data->nb_times_of_eating != -1 && data->philos[i].eat_count == data->nb_times_of_eating)
 		{
-			print_state(&data->philos[i], "has died", data->philos[i].id);
-			data->is_philo_dead = 1;
-			// pthread_mutex_unlock(&philo->data->state);
 			if (detach_philos(data))
 				return (1);
-			exit(1);
+			break ;
+		}
+		if (get_ms_time() - data->philos[i].last_eat_time > data->time_to_die)
+		{
+			pthread_mutex_lock(&data->state);
+			print_state(&data->philos[i], "has died", data->philos[i].id);
+			data->is_philo_dead = 1;
+			if (detach_philos(data))
+				return (1);
+			break ;
 		}
 		i++;
-	}
-	return (0);
-}
-
-int	check_is_philo_dying(t_philo *philo)
-{
-	t_data	*data;
-
-	data = philo->data;
-	if (get_ms_time() - philo->last_eat_time > data->time_to_die)
-	{
-		print_state(philo, "has died", philo->id);
-		data->is_philo_dead = 1;
-		if (detach_philos(data))
-			return (1);
-		exit(1);
 	}
 	return (0);
 }
@@ -116,8 +106,6 @@ void  *routine(void *arg)
 	philo = (t_philo *) arg;
 	while (1)
 	{
-		if (check_is_philo_dying(philo))
-			return (NULL);
 		pthread_mutex_lock(&philo->data->forks[philo->id - 1]);
 		print_state(philo, "has taken a fork", philo->id);
 		pthread_mutex_lock(&philo->data->forks[philo->id % philo->data->philos_nb]);
