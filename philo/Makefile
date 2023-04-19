@@ -6,7 +6,7 @@
 #    By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 23:48:55 by mahansal          #+#    #+#              #
-#    Updated: 2023/04/14 03:03:50 by mahansal         ###   ########.fr        #
+#    Updated: 2023/04/19 06:00:43 by mahansal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CFLAGS 		= -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -pthread -g -fsanitize=address
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lpthread #-g3 -fsanitize=thread
 	
 clean:
 	rm -f $(OBJS)
