@@ -6,13 +6,73 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/19 06:27:51 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/23 23:37:25 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+int	init_mutexes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philos_nb)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL))
+			return (1);
+		i++;
+	}
+	pthread_mutex_init(&data->state, NULL);
+	return (0);
+}
+
+int	destroy_mutexes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philos_nb)
+	{
+		if (pthread_mutex_destroy(&data->forks[i]))
+			return (1);
+		i++;
+	}
+	pthread_mutex_destroy(&data->state);
+	return (0);
+}
+
+int	join_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (data->is_philo_dead)
+		return (1);
+	while (i < data->philos_nb)
+	{
+		if (pthread_join(data->philos[i].thread, NULL))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	detach_philos(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philos_nb)
+	{
+		if (pthread_detach(data->philos[i].thread))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	main(int argc, char **argv)
 {
 	t_data	*data;
 
