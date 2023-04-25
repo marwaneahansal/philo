@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 22:35:57 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/23 23:47:03 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/25 00:33:51 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int		destroy_mutexes(t_data *data);
 int		join_threads(t_data *data);
 int		create_philos(t_data *data);
 int		check_dying_philos(t_data *data);
+int		detach_philos(t_data *data);
+void	sleep_time(long start_time, long end_time);
 
 void	print_state(t_philo *philo, char *state, int philo_id);
 long	get_ms_time(void);

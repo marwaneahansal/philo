@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 02:11:46 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/23 23:40:58 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/25 00:34:11 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	check_eat_time(t_data *data, int i)
 			return (1);
 		return (1);
 	}
+	return (0);
 }
 
 int	check_dying_philos(t_data *data)
