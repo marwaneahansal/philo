@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 02:11:46 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/25 00:34:11 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/25 04:28:28 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	*routine(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->data->forks[philo->id - 1]);
+		print_state(philo, "has taken a fork", philo->id);
 		pthread_mutex_lock(&philo->data->forks[philo->id
 			% philo->data->philos_nb]);
-		print_state(philo, "has taken a fork", philo->id);
 		print_state(philo, "has taken a fork", philo->id);
 		print_state(philo, "is eating", philo->id);
 		sleep_time(get_ms_time(), philo->data->time_to_eat);
