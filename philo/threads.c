@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 02:11:46 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/25 04:28:28 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:51:57 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,16 @@ int	create_philos(t_data *data)
 
 int	check_eat_time(t_data *data, int i)
 {
+	pthread_mutex_lock(&data->nb_eat);
 	if (data->nb_times_of_eating != -1
 		&& data->philos[i].eat_count == data->nb_times_of_eating)
 	{
+		pthread_mutex_unlock(&data->nb_eat);
 		if (detach_philos(data))
 			return (1);
 		return (1);
 	}
+	pthread_mutex_unlock(&data->nb_eat);
 	return (0);
 }
 
@@ -49,6 +52,7 @@ int	check_dying_philos(t_data *data)
 	{
 		if (check_eat_time(data, i))
 			return (1);
+		pthread_mutex_lock(&data->last_eat);
 		if (get_ms_time() - data->philos[i].last_eat_time > data->time_to_die)
 		{
 			pthread_mutex_lock(&data->state);
@@ -56,10 +60,12 @@ int	check_dying_philos(t_data *data)
 				get_ms_time() - data->start_time,
 				data->philos[i].id, "has died");
 			data->is_philo_dead = 1;
+			pthread_mutex_unlock(&data->last_eat);
 			if (detach_philos(data))
 				return (1);
 			return (1);
 		}
+		pthread_mutex_unlock(&data->last_eat);
 		i++;
 		if (i == data->philos_nb)
 			i = 0;
@@ -81,8 +87,12 @@ void	*routine(void *arg)
 		print_state(philo, "has taken a fork", philo->id);
 		print_state(philo, "is eating", philo->id);
 		sleep_time(get_ms_time(), philo->data->time_to_eat);
+		pthread_mutex_lock(&philo->data->nb_eat);
 		philo->eat_count++;
+		pthread_mutex_unlock(&philo->data->nb_eat);
+		pthread_mutex_lock(&philo->data->last_eat);
 		philo->last_eat_time = get_ms_time();
+		pthread_mutex_unlock(&philo->data->last_eat);
 		pthread_mutex_unlock(&philo->data->forks[philo->id - 1]);
 		pthread_mutex_unlock(&philo->data->forks[philo->id
 			% philo->data->philos_nb]);

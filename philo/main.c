@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/23 23:37:25 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:43:48 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	init_mutexes(t_data *data)
 		i++;
 	}
 	pthread_mutex_init(&data->state, NULL);
+	pthread_mutex_init(&data->nb_eat, NULL);
+	pthread_mutex_init(&data->last_eat, NULL);
 	return (0);
 }
 
@@ -39,6 +41,8 @@ int	destroy_mutexes(t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(&data->state);
+	pthread_mutex_destroy(&data->nb_eat);
+	pthread_mutex_destroy(&data->last_eat);
 	return (0);
 }
 

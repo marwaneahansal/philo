@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 22:35:57 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/25 00:33:51 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:41:59 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	state;
+	pthread_mutex_t	nb_eat;
+	pthread_mutex_t	last_eat;
 }	t_data;
 
 int		ft_atoi(const char *str);
