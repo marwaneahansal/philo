@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 06:55:18 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/26 07:12:24 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:35:53 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ typedef struct s_data
 	long			start_time;
 	int				is_philo_dead;
 	struct s_philo	*philos;
+	sem_t						*forks;
+	sem_t						*state;
+	sem_t						*nb_eat;
+	sem_t						*last_eat;
+	pthread_t				state_routine;
 }	t_data;
 
 int		ft_atoi(const char *str);
