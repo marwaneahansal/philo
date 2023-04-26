@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 06:55:18 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/26 09:35:53 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:31:15 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # include <sys/time.h>
 # include <semaphore.h>
 # include <fcntl.h>
+# include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 struct	s_philo;
 struct	s_data;

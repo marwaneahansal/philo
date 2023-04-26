@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 07:01:38 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/26 09:44:57 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:16:38 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,5 @@ int	create_philos(t_data *data)
     data->philos[i].process_id = -1;
 		i++;
 	}
-	data->start_time = get_ms_time();
 	return (0);
 }

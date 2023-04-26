@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/26 09:43:51 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:57:42 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,36 @@ int	check_eat_time(t_data *data, int i)
 
 void	*check_dying_philos(void *arg)
 {
-	t_data	*data;
+	t_philo	*philo;
 	int	i;
 
 	i = 0;
-	data = (t_data *) arg;
-	while (i < data->philos_nb)
+	philo = (t_philo *) arg;
+	while (1)
 	{
-		if (check_eat_time(data, i))
+		if (check_eat_time(philo->data, i))
 			exit(0);
-		sem_wait(data->last_eat);
-		if (get_ms_time() - data->philos[i].last_eat_time > data->time_to_die)
+		sem_wait(philo->data->last_eat);
+		if (get_ms_time() - philo->last_eat_time > philo->data->time_to_die)
 		{
-			sem_wait(data->state);
+			sem_wait(philo->data->state);
 			printf("%ld \t %d \t %s\n",
-				get_ms_time() - data->start_time,
-				data->philos[i].id, "has died");
-			data->is_philo_dead = 1;
-			sem_post(data->last_eat);
+				get_ms_time() - philo->data->start_time,
+				philo->data->philos[i].id, "has died");
+			philo->data->is_philo_dead = 1;
+			sem_post(philo->data->last_eat);
 			exit(0);
 		}
-		sem_post(data->last_eat);
-		i++;
-		if (i == data->philos_nb)
-			i = 0;
+		sem_post(philo->data->last_eat);
 	}
 	return (NULL);
 }
 
 void	routine(t_philo *philo)
 {
+	pthread_create(&philo->data->state_routine, NULL, &check_dying_philos, philo);
+	if(philo->id % 2 ==0)
+		usleep(1000);
 	while (1)
 	{
 		sem_wait(philo->data->forks);
@@ -92,6 +92,7 @@ void	routine(t_philo *philo)
 		sleep_time(get_ms_time(), philo->data->time_to_sleep);
 		print_state(philo, "is thinking", philo->id);
 	}
+	// pthread_join(philo->data->state_routine, NULL);
 }
 
 void	init_semaphors(t_data *data)
@@ -121,17 +122,20 @@ int	main(int argc, char **argv)
 	if (create_philos(data))
 		return (1);
 	init_semaphors(data);
-	pthread_create(&data->state_routine, NULL, &check_dying_philos, data);
 	while (i < data->philos_nb)
 	{
 		data->philos[i].process_id = fork();
 		if (data->philos[i].process_id == 0)
-			{
-				routine(&data->philos[i]);
-				exit(0);
-			}
+		{
+			routine(&data->philos[i]);
+			exit(0);
+		}
 		i++;
 	}
-	pthread_join(data->state_routine, NULL);
+	sem_close(data->forks);
+	sem_close(data->state);
+	sem_close(data->nb_eat);
+	sem_close(data->last_eat);
+	waitpid(-1, NULL, 0);
 	return (0);
 }
