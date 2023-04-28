@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/28 12:41:59 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:49:30 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	*check_dying_philos(void *arg)
 				get_ms_time() - philo->data->start_time,
 				philo->data->philos[i].id, "has died");
 			philo->data->is_philo_dead = 1;
-			// sem_post(philo->data->last_eat);
+			sem_post(philo->data->last_eat);
 			kill_processes(philo->data, 1);
 		}
 		sem_post(philo->data->last_eat);
@@ -124,7 +124,6 @@ int	main(int argc, char **argv)
 {
 	t_data	*data;
 	int			i;
-	// int			child_status;
 
 	data = NULL;
 	i = 0;
@@ -159,14 +158,24 @@ int	main(int argc, char **argv)
 		i += 2;
 	}
 	i = 0;
-	// waitpid(-1, NULL, 0);
 	int status = 0;
 	int response = 0;
-	while (WEXITSTATUS(status) == 0 && response != -1)
+	while (i < data->philos_nb)
 	{
-		response = waitpid(-1, &status, 0);
+		while (WEXITSTATUS(status) == 0 && response != -1)
+		{
+			response = waitpid(-1, &status, 0);
+		}
+		i++;
 	}
-	
+
+	// waitpid(-1, NULL, 0);
+	// int status = 0;
+	// int response = 0;
+	// while (WEXITSTATUS(status) == 0 && response != -1)
+	// {
+	// 	response = waitpid(-1, &status, 0);
+	// }
 	sem_close(data->forks);
 	sem_close(data->state);
 	sem_close(data->nb_eat);
