@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/01 16:53:04 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:39:41 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	*check_dying_philos(void *arg)
 	philo = (t_philo *) arg;
 	while (1)
 	{
-		if (check_eat_time(philo->data, i))
-			exit(1);
+		// if (check_eat_time(philo->data, i))
+		// 	exit(1);
 		sem_wait(philo->data->last_eat);
 		if (get_ms_time() - philo->last_eat_time > philo->data->time_to_die)
 		{
@@ -100,6 +100,7 @@ void	routine(t_philo *philo)
 		sem_post(philo->data->last_eat);
 		sem_post(philo->data->forks);
 		sem_post(philo->data->forks);
+		sem_post(philo->sem_eat_count);
 		print_state(philo, "is sleeping", philo->id);
 		sleep_time(get_ms_time(), philo->data->time_to_sleep);
 		print_state(philo, "is thinking", philo->id);
@@ -128,9 +129,48 @@ void	init_semaphors(t_data *data)
 	i = 0;
 	while (i < data->philos_nb)
 	{
-		data->philos[i].sem_eat_count = sem_open(ft_itoa(data->philos[i].id), O_CREAT, 0644, data->nb_times_of_eating);
+		data->philos[i].sem_eat_count = sem_open(ft_itoa(data->philos[i].id), O_CREAT, 0644, 0);
 		i++;
 	}
+}
+
+void	*check_eat_count(void *arg)
+{
+	int		i;
+	int		j;
+	t_data *data;
+
+	i = 0;
+	j = 0;
+	data = (t_data *) arg;
+	if (data->nb_times_of_eating != -1)
+	{
+		while (i < data->philos_nb)
+		{
+			while (j < data->nb_times_of_eating)
+			{
+				sem_wait(data->philos[i].sem_eat_count);
+				usleep(500);
+				j++;
+			}
+			i += 2;
+		}
+		usleep(500);
+		i = 1;
+		while (i < data->philos_nb)
+		{
+			while (j < data->nb_times_of_eating)
+			{
+				sem_wait(data->philos[i].sem_eat_count);
+				usleep(500);
+				j++;
+			}
+			i += 2;
+		}
+		kill_processes(data);
+		exit(0);
+	}
+	return (NULL);
 }
 
 int	main(int argc, char **argv)
@@ -138,6 +178,7 @@ int	main(int argc, char **argv)
 	t_data	*data;
 	int			i;
 	int			status;
+	pthread_t	thread;
 
 	data = NULL;
 	i = 0;
@@ -149,6 +190,7 @@ int	main(int argc, char **argv)
 	if (create_philos(data))
 		return (1);
 	init_semaphors(data);
+	pthread_create(&thread, NULL, &check_eat_count, data);
 	while (i < data->philos_nb)
 	{
 		data->philos[i].process_id = fork();
@@ -171,6 +213,7 @@ int	main(int argc, char **argv)
 		}
 		i += 2;
 	}
+	pthread_join(thread, NULL);
 	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WEXITSTATUS(status) == 1)

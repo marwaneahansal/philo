@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 02:11:46 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/01 16:20:29 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:21:24 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	create_philos_threads(t_data *data)
 			return (1);
 		i += 2;
 	}
-	usleep(1000);
+	usleep(500);
 	i = 1;
 	while (i < data->philos_nb)
 	{
