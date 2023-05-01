@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 06:55:18 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/26 15:16:02 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:45:35 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_philo
 	pid_t			process_id;
 	int				eat_count;
 	long			last_eat_time;
+	sem_t			*sem_eat_count;
 	struct s_data	*data;
 }	t_philo;
 
@@ -55,6 +56,7 @@ typedef struct s_data
 }	t_data;
 
 int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
 long	get_ms_time(void);
 t_data	*init_philos_data(int argc, char **argv);
 int	create_philos(t_data *data);

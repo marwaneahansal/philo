@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/29 23:51:34 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:53:04 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	kill_processes(t_data *data)
 	i = 0;
 	while (i < data->philos_nb)
 	{
-		printf("id %d , pid: %d\n", data->philos[i].id, data->philos[i].process_id);
 		if (data->philos[i].process_id != -1)
 			kill(data->philos[i].process_id, SIGTERM);
 		i++;
@@ -110,6 +109,14 @@ void	routine(t_philo *philo)
 
 void	init_semaphors(t_data *data)
 {
+	int	i;
+
+	i = 0;
+	while (i < data->philos_nb)
+	{
+		sem_unlink(ft_itoa(data->philos[i].id));
+		i++;
+	}
 	sem_unlink("forks");
 	sem_unlink("state");
 	sem_unlink("nb_eat");
@@ -118,6 +125,12 @@ void	init_semaphors(t_data *data)
 	data->state = sem_open("state", O_CREAT, 0644, 1);
 	data->nb_eat = sem_open("nb_eat", O_CREAT, 0644, 1);
 	data->last_eat = sem_open("last_eat", O_CREAT, 0644, 1);
+	i = 0;
+	while (i < data->philos_nb)
+	{
+		data->philos[i].sem_eat_count = sem_open(ft_itoa(data->philos[i].id), O_CREAT, 0644, data->nb_times_of_eating);
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)

@@ -6,7 +6,7 @@
 #    By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 06:56:33 by mahansal          #+#    #+#              #
-#    Updated: 2023/04/26 11:16:16 by mahansal         ###   ########.fr        #
+#    Updated: 2023/05/01 16:50:34 by mahansal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC			= cc
 
 NAME 		= philo_bonus
 
-SRCS 		= main.c ft_atoi.c helpers.c 
+SRCS 		= main.c ft_atoi.c helpers.c ft_itoa.c
 
 OBJS 		= $(SRCS:.c=.o)
 
