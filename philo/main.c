@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/25 11:43:48 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:14:38 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	main(int argc, char **argv)
 	if (create_philos_threads(data))
 		return (1);
 	if (check_dying_philos(data))
-		return (1);
+		return (detach_philos(data), 1);
 	if (join_threads(data))
 		return (1);
 	if (destroy_mutexes(data))

@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 02:11:46 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/25 13:51:57 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:20:29 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,7 @@ int	check_eat_time(t_data *data, int i)
 	pthread_mutex_lock(&data->nb_eat);
 	if (data->nb_times_of_eating != -1
 		&& data->philos[i].eat_count == data->nb_times_of_eating)
-	{
-		pthread_mutex_unlock(&data->nb_eat);
-		if (detach_philos(data))
-			return (1);
-		return (1);
-	}
+		return (pthread_mutex_unlock(&data->nb_eat), 1);
 	pthread_mutex_unlock(&data->nb_eat);
 	return (0);
 }
@@ -46,12 +41,14 @@ int	check_eat_time(t_data *data, int i)
 int	check_dying_philos(t_data *data)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	while (i < data->philos_nb)
 	{
 		if (check_eat_time(data, i))
-			return (1);
+			j++;
 		pthread_mutex_lock(&data->last_eat);
 		if (get_ms_time() - data->philos[i].last_eat_time > data->time_to_die)
 		{
@@ -59,16 +56,18 @@ int	check_dying_philos(t_data *data)
 			printf("%ld \t %d \t %s\n",
 				get_ms_time() - data->start_time,
 				data->philos[i].id, "has died");
-			data->is_philo_dead = 1;
 			pthread_mutex_unlock(&data->last_eat);
-			if (detach_philos(data))
-				return (1);
 			return (1);
 		}
 		pthread_mutex_unlock(&data->last_eat);
 		i++;
+		if (j == data->philos_nb)
+			return (1);
 		if (i == data->philos_nb)
+		{
 			i = 0;
+			j = 0;
+		}
 	}
 	return (0);
 }
@@ -116,7 +115,7 @@ int	create_philos_threads(t_data *data)
 			return (1);
 		i += 2;
 	}
-	usleep(500);
+	usleep(1000);
 	i = 1;
 	while (i < data->philos_nb)
 	{
