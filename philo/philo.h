@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 22:35:57 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/25 11:41:59 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/03 23:10:11 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	sleep_time(long start_time, long end_time);
 
 void	print_state(t_philo *philo, char *state, int philo_id);
 long	get_ms_time(void);
+void	do_philo_routine(t_philo *philo);
+int		check_if_philo_dead(t_data *data, int i);
 
 t_data	*init_philos_data(int argc, char **argv);
 
