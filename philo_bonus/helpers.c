@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 07:01:38 by mahansal          #+#    #+#             */
-/*   Updated: 2023/04/27 08:55:25 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/03 23:43:45 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	init_data_struct(t_data *data)
 	data->nb_times_of_eating = -1;
 	data->start_time = 0;
 	data->is_philo_dead = 0;
-  data->philos = 0;
+	data->philos = 0;
 }
 
 t_data	*init_philos_data(int argc, char **argv)
@@ -81,24 +81,7 @@ t_data	*init_philos_data(int argc, char **argv)
 		if (argc == 6)
 			data->nb_times_of_eating = ft_atoi(argv[5]);
 		data->start_time = get_ms_time();
-    data->philos = malloc(sizeof(t_philo) * data->philos_nb);
+		data->philos = malloc(sizeof(t_philo) * data->philos_nb);
 	}
 	return (data);
-}
-
-int	create_philos(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->philos_nb)
-	{
-		data->philos[i].id = i + 1;
-		data->philos[i].eat_count = 0;
-		data->philos[i].last_eat_time = get_ms_time();
-		data->philos[i].data = data;
-    data->philos[i].process_id = -1;
-		i++;
-	}
-	return (0);
 }
