@@ -1,4 +1,7 @@
 {
   "editor.indentSize": "tabSize",
   "editor.tabSize": 4,
+  "files.associations": {
+    "philo.h": "c"
+  },
 }

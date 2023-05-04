@@ -6,7 +6,7 @@
 #    By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 23:48:55 by mahansal          #+#    #+#              #
-#    Updated: 2023/05/01 16:18:11 by mahansal         ###   ########.fr        #
+#    Updated: 2023/05/04 16:04:33 by mahansal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS 		= main.c ft_atoi.c helpers.c threads.c helpers2.c
 
 OBJS 		= $(SRCS:.c=.o)
 
-CFLAGS 		= -Wall -Wextra -Werror #-fsanitize=thread -g3
+CFLAGS 		= -Wall -Wextra -Werror
 
 all: $(NAME)
 
