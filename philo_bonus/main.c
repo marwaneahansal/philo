@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/03 23:47:32 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:08:57 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,7 @@ int	main(int argc, char **argv)
 	pthread_join(thread, NULL);
 	wait_childs(data);
 	close_semaphors(data);
+	free(data->philos);
+	free(data);
 	return (0);
 }
