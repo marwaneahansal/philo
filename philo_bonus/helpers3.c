@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 23:43:10 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/03 23:45:36 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:32:26 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,23 @@ int	create_philos(t_data *data)
 		i++;
 	}
 	return (0);
+}
+
+void	unlink_semaphors(t_data *data)
+{
+	int		i;
+	char	*sem_name;
+
+	i = 0;
+	while (i < data->philos_nb)
+	{
+		sem_name = ft_itoa(data->philos[i].id);
+		sem_unlink(sem_name);
+		free(sem_name);
+		i++;
+	}
+	sem_unlink("forks");
+	sem_unlink("state");
+	sem_unlink("nb_eat");
+	sem_unlink("last_eat");
 }

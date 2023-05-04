@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 06:55:18 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/03 23:46:05 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:32:41 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int		create_philos(t_data *data);
 void	print_state(t_philo *philo, char *state, int philo_id);
 void	sleep_time(long start_time, long end_time);
 void	routine(t_philo *philo);
+void	unlink_semaphors(t_data *data);
 
 #endif
