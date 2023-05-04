@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/04 15:08:57 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:42:52 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,9 @@ void	wait_childs(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data			*data;
-	int				i;
 	pthread_t		thread;
 
 	data = NULL;
-	i = 0;
 	if (argc != 5 && argc != 6)
 		return (printf("Error\n"), 1);
 	data = init_philos_data(argc, argv);

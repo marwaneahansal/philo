@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/01 16:14:38 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:46:23 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv)
 		return (printf("Error\n"), 1);
 	data = init_philos_data(argc, argv);
 	if (!data)
-		return (1);
+		return (printf("Error\n"), 1);
 	if (create_philos(data))
 		return (1);
 	if (init_mutexes(data))

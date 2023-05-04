@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 23:31:21 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/03 23:46:56 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:43:17 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ int	create_even_processess(t_data *data)
 
 void	*check_eat_count(void *arg)
 {
-	int			j;
 	t_data		*data;
 
-	j = 0;
 	data = (t_data *) arg;
 	if (data->nb_times_of_eating != -1)
 	{
