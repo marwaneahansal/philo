@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:22:54 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/04 15:42:52 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:57:33 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,14 @@ void	routine(t_philo *philo)
 void	init_semaphors(t_data *data)
 {
 	int	i;
+	char	*sem_name;
 
 	i = 0;
 	while (i < data->philos_nb)
 	{
-		sem_unlink(ft_itoa(data->philos[i].id));
+		sem_name = ft_itoa(data->philos[i].id);
+		sem_unlink(sem_name);
+		free(sem_name);
 		i++;
 	}
 	sem_unlink("forks");
@@ -86,8 +89,10 @@ void	init_semaphors(t_data *data)
 	i = 0;
 	while (i < data->philos_nb)
 	{
+		sem_name = ft_itoa(data->philos[i].id);
 		data->philos[i].sem_eat_count
-			= sem_open(ft_itoa(data->philos[i].id), O_CREAT, 0644, 0);
+			= sem_open(sem_name, O_CREAT, 0644, 0);
+			free(sem_name);
 		i++;
 	}
 }

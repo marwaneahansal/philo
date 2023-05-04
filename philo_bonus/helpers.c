@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 07:01:38 by mahansal          #+#    #+#             */
-/*   Updated: 2023/05/04 15:45:30 by mahansal         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:55:02 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_args(int argc, char **argv)
 	while (i < argc)
 	{
 		if (!is_numeric(argv[i]) || ft_atoi(argv[i]) <= 0)
-			retrun (0);
+			return (0);
 		i++;
 	}
 	return (1);
